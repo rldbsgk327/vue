@@ -1,0 +1,36 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script defer src="/__/firebase/7.13.1/firebase-app.js"></script>
+  <script defer src="/__/firebase/7.13.1/firebase-database.js"></script>
+  <script defer src="/__/firebase/init.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>{{ email }}</h1> 
+    <p>{{ name }}</p>
+    <p>{{ number }}</p>
+  </div>
+  <script type="text/javascript">
+    var app = new Vue({
+      el: '#app',
+      data: {
+        email: 'hello world',
+        name: 'good morning',
+        number: '학번'
+      }
+    });
+
+    window.onload = function() {
+      let info = firebase.database().ref("myinfo");
+      info.on('value', (snapshot) => {
+        let myinfo = snapshot.val();
+        app.email = myinfo.email;
+        app.name = myinfo.name;
+        app.number = myinfo.number;
+      });
+    };
+   </script>
+</body>
+</html>
