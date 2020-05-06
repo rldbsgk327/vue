@@ -5,6 +5,6 @@ for(let i=0; i<100; i++){
 }  
 
 let even = array.filter((e)=>e%2 === 0);
-let count = array.length;
+let count = even.length;
 
 console.log(count);
