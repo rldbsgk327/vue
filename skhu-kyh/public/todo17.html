@@ -15,7 +15,7 @@
         {{ todo }}
       </li>
     </ul>
-    <input type="text" v-model.trim="todo" /> 
+    <input type="text" v-model.trim="todo.todo" /> 
     <button type="button" v-on:click="addTodo" v-bind:disabled="!todo">할일 추가</button>
     <button type="button" v-on:click="deleteTodo" v-show="checkedCount > 0">삭제</button>
   </div>
@@ -24,9 +24,9 @@
     var app = new Vue({
       el: '#app',
       data: {
-        todoList: [],
+        todoList: {},
         checked: [],
-        todo: ""
+        todo: {}
       },
       computed: {
         checkedCount: function() {
@@ -41,24 +41,18 @@
           let list = [];
           for (let i = 0; i < this.todoList.length; ++i)
             if (!this.checked[i])
-              list.push(this.todoList[i]);
-              axios.delete('https://skhu-kyh.firebaseio.com/todo1/' + this.checked + '.json')//?
-                 .then(response => this.reload());  
-
-          this.checked = [];
+              axios.delete('https://skhu-kyh.firebaseio.com/todo1/' + this.checked + '.json')
+                 .then(response => this.reload());
         },
         reload: function() {   //조회
-          axios.get('https://skhu-kyh.firebaseio.com/todo1.json')
+          axios.post('https://skhu-kyh.firebaseio.com/todo1.json')
                .then(response => this.todoList = response.data);
         },
-        addTodo: function() {  //저장
-          this.todoList.push(this.todo);
+        addTodo: function() {  //저장0
           axios.post('https://skhu-kyh.firebaseio.com/todo1.json', this.todo)
-               .then(response => this.reload());  
-          this.todo = "";
+                 .then(response => this.reload());
+            this.todo = ""; 
         }
-
-
       }
     })
     window.onload = function() {
