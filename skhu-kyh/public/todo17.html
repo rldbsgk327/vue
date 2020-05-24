@@ -48,7 +48,7 @@
           axios.post('https://skhu-kyh.firebaseio.com/todo1.json')
                .then(response => this.todoList = response.data);
         },
-        addTodo: function() {  //저장0
+        addTodo: function() {  //저장
           axios.post('https://skhu-kyh.firebaseio.com/todo1.json', this.todo)
                  .then(response => this.reload());
             this.todo = ""; 
